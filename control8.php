@@ -1,19 +1,19 @@
 <?php
-// Conexión a la base de datos
+
 $servername = "localhost";
-$username = "root"; // Cambia esto
-$password = "Tupasword"; // Cambia esto
+$username = "root";
+$password = "";
 $dbname = "organizacion";
 
-// Crear conexión
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexión
+//  conexión
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Procesar formularios
+//formularios
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['accion'])) {
         switch ($_POST['accion']) {
@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Consultar proyectos con más de dos donaciones
+//proyectos con más de dos donaciones
 $sql_proyectos = "SELECT p.nombre, COUNT(d.id_donacion) AS num_donaciones, SUM(d.monto) AS total_recaudado
                   FROM PROYECTO p
                   LEFT JOIN DONACION d ON p.id_proyecto = d.id_proyecto
@@ -79,7 +79,7 @@ $result_proyectos = $conn->query($sql_proyectos);
 <body>
     <h1>Gestión de Proyectos y Donaciones</h1>
 
-    <!-- Formulario para registrar proyecto -->
+    
     <h2>Registrar Proyecto</h2>
     <form name="proyectoForm" action="" method="post" onsubmit="return validarProyecto()">
         <input type="hidden" name="accion" value="registrar_proyecto">
@@ -96,7 +96,7 @@ $result_proyectos = $conn->query($sql_proyectos);
         <input type="submit" value="Registrar">
     </form>
 
-    <!-- Formulario para registrar donante -->
+    
     <h2>Registrar Donante</h2>
     <form action="" method="post">
         <input type="hidden" name="accion" value="registrar_donante">
@@ -111,7 +111,7 @@ $result_proyectos = $conn->query($sql_proyectos);
         <input type="submit" value="Registrar">
     </form>
 
-    <!-- Formulario para registrar donación -->
+    
     <h2>Registrar Donación</h2>
     <form action="" method="post">
         <input type="hidden" name="accion" value="registrar_donacion">
@@ -126,7 +126,7 @@ $result_proyectos = $conn->query($sql_proyectos);
         <input type="submit" value="Registrar">
     </form>
 
-    <!-- Mostrar proyectos con más de 2 donaciones -->
+    
     <h2>Proyectos con más de 2 donaciones:</h2>
     <?php if ($result_proyectos->num_rows > 0): ?>
         <ul>
